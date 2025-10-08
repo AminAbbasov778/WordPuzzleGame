@@ -43,4 +43,5 @@ interface WordsRepository {
     fun leaveRoom(leaveRoom: LeaveRoom)
     fun guessLetter(guessLetter: GuessLetter)
     fun guessWord(guessWord: GuessWord)
+    fun isConnected(): Boolean
 }

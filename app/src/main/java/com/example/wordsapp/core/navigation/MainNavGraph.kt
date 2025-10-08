@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navigation
+import com.example.wordsapp.history.presentation.HistoryRouteUi
 import com.example.wordsapp.home.presentation.GameRouteUi
 
 @Composable
@@ -37,6 +38,14 @@ fun MainNavGraph(navController: NavHostController, startDestination: Routes) {
             startDestination = Routes.SplashScreen
         ) {
             splashNavGraph(navController)
+        }
+
+        val defaultHistoryRoute = HistoryRouteUi()
+
+        navigation<Routes.HistoryRoot>(
+            startDestination = Routes.HistoryScreen(defaultHistoryRoute)
+        ) {
+            historyNavGraph(navController)
         }
 
 

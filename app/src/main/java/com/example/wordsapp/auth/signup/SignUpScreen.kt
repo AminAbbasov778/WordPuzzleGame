@@ -233,7 +233,7 @@ fun SignUpScreen(
                                     }
 
                                     Icon(
-                                        painter = painterResource(if (state.isPasswordVisible) R.drawable.ic_visible else R.drawable.ic_invisible),
+                                        painter = painterResource(if (state.isPasswordVisible) R.drawable.ic_visible_small else R.drawable.ic_invisible),
                                         contentDescription = "visibilty",
                                         tint = Color.Unspecified,
                                         modifier = Modifier

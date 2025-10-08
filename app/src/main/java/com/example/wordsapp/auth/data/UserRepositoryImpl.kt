@@ -17,6 +17,7 @@ class UserRepositoryImpl @Inject constructor(private val auth: FirebaseAuth, pri
     UserRepository {
 
     override suspend fun saveUsername(username: String) {
+
         dataStore.edit { prefs ->
             prefs[USERNAME] = username
         }
@@ -38,13 +39,23 @@ class UserRepositoryImpl @Inject constructor(private val auth: FirebaseAuth, pri
    override fun saveUsernameToRemote(username: String) {
         fireStore.collection("users").document(auth.currentUser!!.uid).set(mapOf("username" to username))
     }
-   override suspend fun getUsernameFromRemote(): String? {
-        val snapshot = fireStore.collection("users")
-            .document(auth.currentUser!!.uid)
-            .get()
-            .await()
-        return snapshot.getString("username")
+    override suspend fun getUsernameFromRemote(): String? {
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            return null
+        }
+
+        return try {
+            val snapshot = fireStore.collection("users")
+                .document(currentUser.uid)
+                .get()
+                .await()
+            snapshot.getString("username")
+        } catch (e: Exception) {
+            "Guest"
+        }
     }
+
 
 
 

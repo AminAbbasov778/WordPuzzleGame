@@ -6,5 +6,6 @@ sealed class HomeIntents {
     data class JoinRoom(val joinRoomUi: JoinRoomUi) : HomeIntents()
      object SignOut : HomeIntents()
      object ConnectSocket : HomeIntents()
-
+    data class ChangeCurrentTab(val status: Status) : HomeIntents()
 }
+

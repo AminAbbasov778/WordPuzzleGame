@@ -1,8 +1,14 @@
 package com.example.wordsapp.home.presentation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.wordsapp.core.data.models.GameUpdate
+import com.example.wordsapp.core.utils.formatDate
 import com.example.wordsapp.core.utils.getRelativeTime
+import com.example.wordsapp.core.utils.getTimeAgo
 import com.example.wordsapp.game.GameUpdateUi
+import com.example.wordsapp.home.data.module.room.Room
+import com.example.wordsapp.home.data.module.room.RoomX
 import com.example.wordsapp.home.domain.JoinRoomModel
 import com.example.wordsapp.home.domain.PlayerJoinedModel
 import com.example.wordsapp.home.domain.RoomModel
@@ -12,16 +18,28 @@ import toDifficulty
 import toLanguage
 import toStatus
 
-fun RoomModel.toUi(): RoomUi {
+fun RoomX.toUi(): RoomUi{
     return RoomUi(
-        roomId = roomId,
-        roomName = roomName,
-        status = status.toStatus(),
-        maxPlayers = maxPlayers,
-        difficulty = difficulty.toDifficulty(),
-        language = language.toLanguage(),
-        createdAt = getRelativeTime(createdAt)
+        roomId = this.roomId,
+        roomName = this.roomName,
+        status = this.status.toStatus(),
+
+        maxPlayers = this.maxPlayers,
+
+        currentPlayers = this.playerCount,
+        difficulty = this.difficulty.toDifficulty(),
+
+        language = this.language.toLanguage(),
+        createdAt = getTimeAgo(this.createdAt.seconds.toLong()),
+        hasWinner = this.hasWinner,
+        winner = this.winner,
+        word = this.word,
+        wrongGuesses = this.wrongGuesses,
+
+
+
     )
+
 }
 
 fun JoinRoomUi.toDomain(): JoinRoomModel = JoinRoomModel(

@@ -15,7 +15,7 @@ import com.example.wordsapp.home.presentation.GameRouteUi
 
 
 fun NavGraphBuilder.gameNavGraph(navHostController: NavHostController) {
-    composable<Routes.GameScreen>(typeMap = mapOf(typeOf<GameRouteUi>() to NavType)) {
+    composable<Routes.GameScreen>(typeMap = mapOf(typeOf<GameRouteUi>() to createNavType<GameRouteUi>())) {
        val viewModel : GameViewModel  =  hiltViewModel()
         val state by viewModel.state.collectAsStateWithLifecycle()
         val arguments = it.toRoute<Routes.GameScreen>()

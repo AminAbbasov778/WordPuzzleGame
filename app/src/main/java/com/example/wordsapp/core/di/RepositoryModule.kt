@@ -17,6 +17,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import androidx.datastore.preferences.core.Preferences
+import com.example.wordsapp.history.data.remote.HistoryRequestService
+import com.example.wordsapp.history.data.repository.HistoryRepositoryImpl
+import com.example.wordsapp.history.domain.repository.HistoryRepository
+import com.example.wordsapp.home.data.remote.HomeRequestService
 import javax.inject.Singleton
 
 @Module
@@ -32,8 +36,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun  provideRoomRepository(firestore: FirebaseFirestore): RoomsRepository {
-        return RoomsRepositoryImpl(firestore)
+    fun  provideRoomRepository(firestore: FirebaseFirestore,homeRequestService: HomeRequestService): RoomsRepository {
+        return RoomsRepositoryImpl(firestore,homeRequestService)
     }
 
     @Provides
@@ -48,4 +52,10 @@ object RepositoryModule {
     fun provideFirebaseAuth(auth: FirebaseAuth,dataStore : DataStore<Preferences>,firebaseFirestore: FirebaseFirestore): UserRepository{
         return UserRepositoryImpl(auth,dataStore,firebaseFirestore)
     }
-}
+
+    @Provides
+    @Singleton
+    fun provideHistoryRepository(historyRequestService: HistoryRequestService): HistoryRepository {
+        return HistoryRepositoryImpl(historyRequestService)
+
+}}

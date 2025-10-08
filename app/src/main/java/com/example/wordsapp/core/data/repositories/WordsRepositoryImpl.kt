@@ -19,6 +19,10 @@ class WordsRepositoryImpl @Inject constructor(
     override fun connectSocket()  {
         socketHandler.connect()
     }
+
+    override fun isConnected(): Boolean {
+        return socketHandler.isConnected()
+    }
     override fun disconnectSocket()  {
         socketHandler.disconnect()
     }
@@ -67,7 +71,7 @@ class WordsRepositoryImpl @Inject constructor(
     }
 
     override fun roomStateFlow(): Flow<RoomState> {
-        return socketHandler.roomSateFlow
+        return socketHandler.roomStateFlow
     }
 
     override fun joinRoom(joinRoom: JoinRoomModel) = socketHandler.joinRoom(joinRoom.toData())

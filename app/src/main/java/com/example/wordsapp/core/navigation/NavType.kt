@@ -8,21 +8,18 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-object NavType : NavType<GameRouteUi>(isNullableAllowed = false) {
+inline fun <reified T> createNavType(): NavType<T> = object : NavType<T>(false) {
+    override fun get(bundle: Bundle, key: String): T? =
+        bundle.getString(key)?.let { Json.decodeFromString<T>(it) }
 
-    override fun get(bundle: Bundle, key: String): GameRouteUi? {
-        return bundle.getString(key)?.let { Json.decodeFromString<GameRouteUi>(it) }
-    }
+    override fun parseValue(value: String): T =
+        Json.decodeFromString(Uri.decode(value))
 
-    override fun parseValue(value: String): GameRouteUi {
-        return Json.decodeFromString(Uri.decode(value))
-    }
+    override fun serializeAsValue(value: T): String =
+        Uri.encode(Json.encodeToString(value))
 
-    override fun serializeAsValue(value: GameRouteUi): String {
-        return Uri.encode(Json.encodeToString(value))
-    }
-
-    override fun put(bundle: Bundle, key: String, value: GameRouteUi) {
+    override fun put(bundle: Bundle, key: String, value: T) {
         bundle.putString(key, Json.encodeToString(value))
     }
 }
+

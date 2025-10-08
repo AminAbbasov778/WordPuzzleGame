@@ -54,7 +54,7 @@ class GameViewModel @Inject constructor(
     private val guessWordUseCase: GuessWordUseCase,
     private val disconnectUseCase: DisconnectUseCase,
     private val connectUseCase: ConnectSocketUseCase,
-    private val socket: Socket,
+
     private val getRoomStateUseCase: GetRoomStateUseCase,
 ) : ViewModel() {
 
@@ -64,26 +64,19 @@ class GameViewModel @Inject constructor(
     private var guessJob: Job? = null
 
     init {
+
+
         _state.value = GameState(
-            gameUpdateUi = GameUpdateUi(
-                discovered = emptyList(),
-                guessedBy = "",
-                guessedLetter = "",
-                correct = false,
-                playerScore = 0
-            ),
-            isGameStarted = false,
-            turnTimer = 30,
             letters = getInitialLetters(),
             isObservingFlows = false,
-            currentPlayerCount = 0,
-            joinedList = emptyList(),
-            playerJoined = PlayerJoinedUi("", "", false),
 
         )
+        observeFlows()
         onEvent(GameIntent.GetLetters)
 
     }
+
+
 
     private fun getInitialLetters(): List<LetterUi> {
         val alphabet = if (_state.value.gameRouteUi.language == "az") {
@@ -94,19 +87,16 @@ class GameViewModel @Inject constructor(
         return alphabet.map { LetterUi(it) }
     }
     override fun onCleared() {
-        if (_state.value.isLeft) {
-            disconnectUseCase()
-            _state.value.isObservingFlows = false
-        }
+
         timerJob?.cancel()
         super.onCleared()
     }
 
 
     private fun observeFlows() {
+        if(_state.value.isObservingFlows) return
+        _state.update { it.copy(isObservingFlows = true) }
         Log.e("Socket", "observeFlows: Called COunt  ")
-        if (_state.value.isObservingFlows) return
-        _state.value.isObservingFlows = true
         playerJoinedFlowUseCase().onEach {
             Log.e("Socket", "observeFlows:  do i joined ${it.toString()}  ")
 
@@ -266,41 +256,35 @@ class GameViewModel @Inject constructor(
                             language = intent.update.language,
                             userUid = intent.update.userUid,
                             status = intent.update.status, createdAt = intent.update.createdAt,
-                            currentPlayers =0,
                             username = intent.update.username
                         ),
 
                     )
 
                 }
-                viewModelScope.launch {
-                    if (!socket.connected()) {
-                        Log.e("Socket", "Initiating socket connection")
-                        connectUseCase()
-                        while (!socket.connected()) {
-                            delay(100L)
-                        }
-                    }
 
-                }
-                observeFlows()
+
             }
 
             GameIntent.ClearState -> clearState()
             is GameIntent.LetterClicked -> TODO()
             GameIntent.GetLetters -> getLetters()
-            GameIntent.ObserveFlows -> observeFlows()
             GameIntent.ReadyPlayerSheetVisibility -> _state.update { it.copy(isReadyPlayerSheetOpen = !it.isReadyPlayerSheetOpen) }
             GameIntent.CustomWordVisibility -> _state.update { it.copy(isCustomWordVisible = !it.isCustomWordVisible) }
             GameIntent.GoBack -> _state.update { it.copy(isBack = !it.isBack) }
+            GameIntent.ChangeWordVisibility -> changeWordVisibility()
 
-        }
+    }}
+
+    fun changeWordVisibility(){
+        _state.update { it.copy(isWordVisible = !it.isWordVisible) }
     }
 
+
     private fun clearState() {
-        _state.value = GameState()
+
+
         timerJob?.cancel()
-        disconnectUseCase()
     }
 
     private fun startTurnTimer() {
@@ -356,6 +340,7 @@ class GameViewModel @Inject constructor(
     fun getHomeState() {
         viewModelScope.launch {
             getRoomStateUseCase().collect {  homeState ->
+                Log.e("Socket", "getHomeState: ${homeState.toString()}", )
                 if(homeState.roomId == state.value.gameRouteUi.roomId){
                     _state.update {gameState -> gameState.copy(currentPlayerCount = gameState.currentPlayerCount + 1,joinedList =  gameState.joinedList + homeState.players.map { PlayerJoinedUi( it.id, it.name, it.ready) }) }
 

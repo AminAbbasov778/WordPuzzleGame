@@ -1,6 +1,7 @@
 package com.example.wordsapp.home.presentation.components
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -42,6 +43,7 @@ import kotlinx.serialization.json.Json
 @Composable
 fun RoomItem(navController: NavHostController, room: RoomUi, onIntent: (HomeIntents) -> Unit,username: String,userUid: String) {
 
+    
     if(room.isJoinClicked){
         navController.navigate(Routes.GameScreen(
             GameRouteUi(
@@ -102,33 +104,55 @@ fun RoomItem(navController: NavHostController, room: RoomUi, onIntent: (HomeInte
                     Icon(painter = painterResource(R.drawable.ic_difficulty), contentDescription = null, tint = Color(0xFFAFB0B2))
                     Spacer(modifier = Modifier.width(3.dp))
                     Text(text = if(room.difficulty == Difficulty.EASY) "Easy" else if(room.difficulty == Difficulty.MEDIUM) "Medium" else "Hard", style = Inknut40.copy(color = Color(0xFFCFCFCF), fontSize = 12.sp))
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Icon(painter = painterResource(R.drawable.iconoir_language), contentDescription = null, tint = Color(0xFFAFB0B2))
+                    Spacer(modifier = Modifier.width(3.dp))
+                    Text(text = if(room.language == Language.EN) "En" else if(room.language == Language.AZ) "Az" else "Tr", style = Inknut40.copy(color = Color(0xFFCFCFCF), fontSize = 12.sp))
 
                 }
             }
 
             Box(
-                modifier = Modifier.background(color =if(room.currentPlayers == room.maxPlayers || room.status == Status.GAME || room.isJoinClicked)Color(0xFFC40100).copy(0.5f) else Color(0xFFC40100), shape = RoundedCornerShape(6.dp))
-                    .padding(horizontal = 10.dp, vertical = 4.dp).clickable{
-                        if(room.currentPlayers == room.maxPlayers) return@clickable
-                     //   if(room.status == Status.GAME ) return@clickable
-                        if( room.isJoinClicked) return@clickable
+                modifier = Modifier
+                    .background(
+                        color = if (room.currentPlayers == room.maxPlayers || room.status == Status.GAME || room.isJoinClicked) Color(
+                            0xFFC40100
+                        ).copy(0.5f) else Color(0xFFC40100), shape = RoundedCornerShape(6.dp)
+                    )
+                    .padding(horizontal = 10.dp, vertical = 4.dp)
+                    .clickable {
+                        if (room.currentPlayers == room.maxPlayers) return@clickable
+                         if(room.status == Status.GAME ) return@clickable
+                        if (room.isJoinClicked) return@clickable
+                        Log.e("username", "RoomItem:${userUid} ", )
 
-                            onIntent(HomeIntents.JoinRoom(JoinRoomUi(roomId = room.roomId, userId = userUid, username = username, difficulty =if(room.difficulty == Difficulty.EASY) "easy" else if(room.difficulty == Difficulty.MEDIUM) "medium" else "hard", language = if(room.language == Language.EN) "en" else if(room.language == Language.AZ) "az" else "tr")))
+                        onIntent(
+                            HomeIntents.JoinRoom(
+                                JoinRoomUi(
+                                    roomId = room.roomId,
+                                    userId = userUid,
+                                    username = username,
+                                    difficulty = if (room.difficulty == Difficulty.EASY) "easy" else if (room.difficulty == Difficulty.MEDIUM) "medium" else "hard",
+                                    language = if (room.language == Language.EN) "en" else if (room.language == Language.AZ) "az" else "tr"
+                                )
+                            )
+                        )
 
-                            navController.navigate(Routes.GameScreen(
+                        navController.navigate(
+                            Routes.GameScreen(
                                 GameRouteUi(
                                     roomId = room.roomId,
                                     roomName = room.roomName,
-                                    status = if(room.difficulty == Difficulty.EASY) "easy" else if(room.difficulty == Difficulty.MEDIUM) "medium" else "hard",
+                                    status = if (room.difficulty == Difficulty.EASY) "easy" else if (room.difficulty == Difficulty.MEDIUM) "medium" else "hard",
                                     maxPlayers = room.maxPlayers,
                                     username = username,
                                     userUid = userUid,
                                     currentPlayers = room.currentPlayers,
-                                    difficulty = if(room.difficulty == Difficulty.EASY) "easy" else if(room.difficulty == Difficulty.MEDIUM) "medium" else "hard",
-                                    language = if(room.language == Language.EN) "en" else "az",
-                                ))
+                                    difficulty = if (room.difficulty == Difficulty.EASY) "easy" else if (room.difficulty == Difficulty.MEDIUM) "medium" else "hard",
+                                    language = if (room.language == Language.EN) "en" else "az",
+                                )
                             )
-
+                        )
 
 
                     },

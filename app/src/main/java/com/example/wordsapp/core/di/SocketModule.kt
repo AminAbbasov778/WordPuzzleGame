@@ -1,6 +1,7 @@
 package com.example.wordsapp.core.di
 
 import com.example.wordsapp.core.network.SocketHandler
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,9 +29,16 @@ object SocketModule {
 
     @Provides
     @Singleton
-    fun provideSocketHandler(socket : io.socket.client.Socket): SocketHandler {
-        return SocketHandler(socket)
+    fun provideSocketHandler(socket : io.socket.client.Socket,gson: Gson): SocketHandler {
+        return SocketHandler(socket, gson)
 
     }
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson {
+        return Gson()
+    }
+
 
 }

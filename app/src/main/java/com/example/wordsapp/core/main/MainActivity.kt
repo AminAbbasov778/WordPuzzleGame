@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
+
             WordsAppTheme {
                 MainNavGraph(navController, startDestination = Routes.SplashRoot)
             }

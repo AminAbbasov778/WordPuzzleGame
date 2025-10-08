@@ -18,9 +18,9 @@ sealed class GameIntent {
     object ClearState : GameIntent()
     object  GetLetters : GameIntent()
     object  GoBack : GameIntent()
-    object  ObserveFlows : GameIntent()
     object  CustomWordVisibility : GameIntent()
     object ReadyPlayerSheetVisibility : GameIntent()
+    object ChangeWordVisibility : GameIntent()
 
 
 }

@@ -29,6 +29,8 @@ data class GameState(
     val turn: Turn? = null,
     val isYourTurn: Boolean = false,
     val whichPlayerTurn : Int = 0,
+
+
     var isLeft: Boolean = false,
     val gameUpdateUi: GameUpdateUi? = null,
     val gameSettings: GameSettingsUpdate? = null,
@@ -43,6 +45,7 @@ data class GameState(
     val isCustomWordVisible : Boolean = false,
     val guessingCounts : Int = 0,
     val isBack : Boolean = false,
-    val isGuessesVisible : Boolean = false
+    val isGuessesVisible : Boolean = false,
+    val isWordVisible : Boolean = false,
 ) {
 }

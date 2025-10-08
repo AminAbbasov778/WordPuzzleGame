@@ -1,5 +1,6 @@
 package com.example.wordsapp.core.navigation
 
+import com.example.wordsapp.history.presentation.HistoryRouteUi
 import com.example.wordsapp.home.presentation.GameRouteUi
 import com.example.wordsapp.home.presentation.RoomUi
 import kotlinx.serialization.Contextual
@@ -39,6 +40,12 @@ sealed class Routes {
 
     @Serializable
     data object SplashRoot : Routes()
+
+    @Serializable
+    data class HistoryScreen(val historyRouteUi: HistoryRouteUi) : Routes()
+
+    @Serializable
+    data object HistoryRoot : Routes()
 
 
 }
