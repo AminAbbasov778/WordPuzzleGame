@@ -20,6 +20,7 @@ import com.example.wordsapp.ui.theme.Inter
 
 @Composable
 fun EmptyLeaderBoard() {
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally

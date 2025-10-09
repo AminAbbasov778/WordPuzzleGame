@@ -1,7 +1,23 @@
 package com.example.wordsapp.core.network
 
 import com.example.wordsapp.core.base.BaseSocketHandler
-import com.example.wordsapp.core.data.models.*
+import com.example.wordsapp.game.data.model.HomeState
+import com.example.wordsapp.home.data.model.RoomUpdate
+import com.example.wordsapp.game.data.model.GameOver
+import com.example.wordsapp.game.data.model.GameSettingsUpdate
+import com.example.wordsapp.game.data.model.GameStarted
+import com.example.wordsapp.game.data.model.GameUpdate
+import com.example.wordsapp.game.data.model.GuessLetter
+import com.example.wordsapp.game.data.model.GuessWord
+import com.example.wordsapp.home.data.model.JoinRoom
+import com.example.wordsapp.game.data.model.LeaveRoom
+import com.example.wordsapp.game.data.model.PlayerEliminated
+import com.example.wordsapp.game.data.model.PlayerJoined
+import com.example.wordsapp.game.data.model.PlayerLeft
+import com.example.wordsapp.game.data.model.PlayerReadyUpdated
+import com.example.wordsapp.game.data.model.Ready
+import com.example.wordsapp.game.data.model.Turn
+import com.example.wordsapp.game.data.model.UnreadyUpdate
 import com.google.gson.Gson
 import io.socket.client.Socket
 import kotlinx.coroutines.flow.SharedFlow
@@ -25,9 +41,8 @@ class SocketHandler @Inject constructor(
     val playerEliminatedFlow: SharedFlow<PlayerEliminated> = listen("playerEliminated", PlayerEliminated::class.java)
     val gameOverFlow: SharedFlow<GameOver> = listen("gameOver", GameOver::class.java)
     val roomUpdateFlow: SharedFlow<RoomUpdate> = listen("roomUpdate", RoomUpdate::class.java)
-    val roomStateFlow: SharedFlow<RoomState> = listen("roomState", RoomState::class.java)
+    val homeStateFlow: SharedFlow<HomeState> = listen("roomState", HomeState::class.java)
 
-    fun emitToken(token: String) = emit("token", JSONObject().apply { put("token", token) })
     fun joinRoom(joinRoom: JoinRoom) = emit("joinRoom", JSONObject().apply {
         put("roomId", joinRoom.roomId)
         put("userId", joinRoom.userId)

@@ -22,7 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.wordsapp.R
-import com.example.wordsapp.home.presentation.GuideUi
+import com.example.wordsapp.home.presentation.model.GuideUi
 import com.example.wordsapp.ui.theme.Inter
 
 

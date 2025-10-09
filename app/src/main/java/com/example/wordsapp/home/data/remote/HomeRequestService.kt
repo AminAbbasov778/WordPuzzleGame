@@ -1,6 +1,6 @@
 package com.example.wordsapp.home.data.remote
 
-import com.example.wordsapp.home.data.module.room.Room
+import com.example.wordsapp.home.data.model.room.Room
 import retrofit2.http.GET
 import retrofit2.http.Query
 

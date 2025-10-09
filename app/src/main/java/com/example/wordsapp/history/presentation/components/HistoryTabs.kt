@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,11 +18,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.wordsapp.history.presentation.HistoryIntent
-import com.example.wordsapp.history.presentation.HistoryState
-import com.example.wordsapp.history.presentation.HistoryTabUi
-import com.example.wordsapp.history.presentation.HistoryTabs
-import com.example.wordsapp.home.presentation.StatusUi
+import com.example.wordsapp.history.presentation.enums.HistoryTabs
+import com.example.wordsapp.history.presentation.intent.HistoryIntent
+import com.example.wordsapp.history.presentation.model.HistoryTabUi
+import com.example.wordsapp.history.presentation.state.HistoryState
 import com.example.wordsapp.ui.theme.Inter
 
 @Composable

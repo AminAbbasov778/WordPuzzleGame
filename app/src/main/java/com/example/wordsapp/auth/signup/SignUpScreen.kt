@@ -51,7 +51,6 @@ import com.example.wordsapp.ui.theme.Inter
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SignUpScreen(
-    navController: NavHostController,
     onIntent: (SignUpIntent) -> Unit,
     state: SignUpState,
 ) {
@@ -60,6 +59,9 @@ fun SignUpScreen(
         composition,
         iterations = LottieConstants.IterateForever
     )
+
+
+
     Box(modifier = Modifier.fillMaxSize()) {
 
         Scaffold {
@@ -86,8 +88,6 @@ fun SignUpScreen(
                 Column(modifier = Modifier.verticalScroll(rememberScrollState())
                     .systemBarsPadding()
                     .fillMaxSize()) {
-
-
                     Spacer(modifier = Modifier.height(39.dp))
                     Text(
                         text = "Hanged",
@@ -233,7 +233,7 @@ fun SignUpScreen(
                                     }
 
                                     Icon(
-                                        painter = painterResource(if (state.isPasswordVisible) R.drawable.ic_visible_small else R.drawable.ic_invisible),
+                                        painter = painterResource(if (state.isPasswordVisible) R.drawable.ic_visible else R.drawable.ic_invisible),
                                         contentDescription = "visibilty",
                                         tint = Color.Unspecified,
                                         modifier = Modifier
@@ -345,11 +345,12 @@ fun SignUpScreen(
                         Spacer(modifier = Modifier.width(5.dp))
 
                         Text(
-                            text = "Sign up",
+                            text = "Sign in",
                             fontSize = 14.sp,
                             style = Inter,
                             color = Color(0xFFC50000), modifier = Modifier.clickable {
-                                navController.navigate(Routes.SignInScreen)
+                               onIntent(SignUpIntent.SignInClicked)
+
                             }
                         )
                     }
@@ -382,9 +383,10 @@ fun SignUpScreen(
 
                     }
 
-                    if (state.isSignedUp) {
-                        navController.popBackStack()
-                    }
+
+
+                    Spacer(modifier = Modifier.height(30.dp))
+
 
                 }
 

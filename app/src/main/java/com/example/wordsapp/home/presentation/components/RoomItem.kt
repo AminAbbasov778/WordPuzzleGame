@@ -25,42 +25,22 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.wordsapp.R
 import com.example.wordsapp.core.navigation.Routes
-import com.example.wordsapp.home.data.Room
-import com.example.wordsapp.core.utils.getRelativeTime
-import com.example.wordsapp.home.presentation.Difficulty
-import com.example.wordsapp.home.presentation.GameRouteUi
-import com.example.wordsapp.home.presentation.HomeIntents
-import com.example.wordsapp.home.presentation.JoinRoomUi
-import com.example.wordsapp.home.presentation.Language
-import com.example.wordsapp.home.presentation.RoomUi
-import com.example.wordsapp.home.presentation.Status
+import com.example.wordsapp.core.presentation.enums.Difficulty
+import com.example.wordsapp.core.presentation.enums.Language
+import com.example.wordsapp.core.presentation.enums.Status
+import com.example.wordsapp.home.presentation.intent.HomeIntents
+import com.example.wordsapp.home.presentation.model.GameRouteUi
+import com.example.wordsapp.home.presentation.model.JoinRoomUi
+import com.example.wordsapp.home.presentation.model.RoomUi
 import com.example.wordsapp.ui.theme.Inknut40
 import com.example.wordsapp.ui.theme.Inter
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun RoomItem(navController: NavHostController, room: RoomUi, onIntent: (HomeIntents) -> Unit,username: String,userUid: String) {
+fun RoomItem( room: RoomUi, onIntent: (HomeIntents) -> Unit,username: String,userUid: String) {
 
     
-    if(room.isJoinClicked){
-        navController.navigate(Routes.GameScreen(
-            GameRouteUi(
-                roomId = room.roomId,
-                roomName = room.roomName,
-                status = if(room.difficulty == Difficulty.EASY) "easy" else if(room.difficulty == Difficulty.MEDIUM) "medium" else "hard",
-                maxPlayers = room.maxPlayers,
-                username = username,
-                userUid = userUid
-                ,
-                currentPlayers = room.currentPlayers,
-                difficulty = if(room.difficulty == Difficulty.EASY) "easy" else if(room.difficulty == Difficulty.MEDIUM) "medium" else "hard",
-                language = if(room.language == Language.EN) "en" else "az",
-            ))
-        )
 
-    }
 
     Box(
         modifier = Modifier
@@ -138,21 +118,7 @@ fun RoomItem(navController: NavHostController, room: RoomUi, onIntent: (HomeInte
                             )
                         )
 
-                        navController.navigate(
-                            Routes.GameScreen(
-                                GameRouteUi(
-                                    roomId = room.roomId,
-                                    roomName = room.roomName,
-                                    status = if (room.difficulty == Difficulty.EASY) "easy" else if (room.difficulty == Difficulty.MEDIUM) "medium" else "hard",
-                                    maxPlayers = room.maxPlayers,
-                                    username = username,
-                                    userUid = userUid,
-                                    currentPlayers = room.currentPlayers,
-                                    difficulty = if (room.difficulty == Difficulty.EASY) "easy" else if (room.difficulty == Difficulty.MEDIUM) "medium" else "hard",
-                                    language = if (room.language == Language.EN) "en" else "az",
-                                )
-                            )
-                        )
+
 
 
                     },

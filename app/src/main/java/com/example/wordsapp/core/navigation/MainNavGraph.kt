@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navigation
-import com.example.wordsapp.history.presentation.HistoryRouteUi
-import com.example.wordsapp.home.presentation.GameRouteUi
+import com.example.wordsapp.history.presentation.model.HistoryRouteUi
+import com.example.wordsapp.home.presentation.model.GameRouteUi
 
 @Composable
 fun MainNavGraph(navController: NavHostController, startDestination: Routes) {

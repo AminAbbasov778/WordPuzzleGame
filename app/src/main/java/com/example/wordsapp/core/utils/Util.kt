@@ -2,7 +2,6 @@ package com.example.wordsapp.core.utils
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import java.util.concurrent.TimeUnit
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -12,6 +11,7 @@ import java.time.format.DateTimeParseException
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 fun getRelativeTime(timestamp: Timestamp?): String {
     if (timestamp == null) return ""

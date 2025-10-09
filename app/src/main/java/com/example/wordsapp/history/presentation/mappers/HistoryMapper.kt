@@ -8,7 +8,6 @@ import com.example.wordsapp.history.data.models.gamedetail.GameDetail
 import com.example.wordsapp.history.data.models.history.Game
 import com.example.wordsapp.history.data.models.history.Player
 import com.example.wordsapp.history.data.models.history.Winner
-import com.example.wordsapp.history.data.models.user.User
 import com.example.wordsapp.history.presentation.gamedetail.GameDetailPlayerUi
 import com.example.wordsapp.history.presentation.gamedetail.GameDetailUi
 import com.example.wordsapp.history.presentation.gamedetail.GameDetailWinnerUi

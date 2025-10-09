@@ -6,13 +6,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -27,11 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.wordsapp.R
-import com.example.wordsapp.history.presentation.HistoryState
+import com.example.wordsapp.history.presentation.intent.HistoryIntent
+import com.example.wordsapp.history.presentation.state.HistoryState
 import com.example.wordsapp.ui.theme.Inter
 
 @Composable
-fun TopBar(state: HistoryState,navController: NavHostController) {
+fun TopBar(state: HistoryState,onEvent : (HistoryIntent) -> Unit) {
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
@@ -41,7 +40,7 @@ fun TopBar(state: HistoryState,navController: NavHostController) {
             painter = painterResource(R.drawable.ic_back),
             tint = Color.Unspecified,
             contentDescription = "back", modifier = Modifier.clickable{
-                navController.popBackStack()
+                onEvent(HistoryIntent.GoToHome)
             }
         )
         Spacer(modifier = Modifier.height(21.dp))
@@ -76,7 +75,7 @@ fun TopBar(state: HistoryState,navController: NavHostController) {
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = state.user?.data?.user?.totalScore.toString(),
+                    text = if(state.user?.data?.user?.totalScore != null) state.user.data.user.totalScore.toString() else "0",
                     modifier = Modifier,
                     style = Inter.copy(
                         fontSize = 24.sp,
@@ -110,7 +109,7 @@ fun TopBar(state: HistoryState,navController: NavHostController) {
                                 )
                                 Spacer(modifier = Modifier.height(6.dp))
                                 Text(
-                                    text = state.user?.data?.user?.totalGames.toString(),
+                                    text = if(state.user?.data?.user?.totalGames != null) state.user.data.user.totalGames.toString() else "0",
                                     modifier = Modifier,
                                     style = Inter.copy(
                                         fontSize = 16.sp,
@@ -144,7 +143,7 @@ fun TopBar(state: HistoryState,navController: NavHostController) {
                             )
                             Spacer(modifier = Modifier.height(6.dp))
                             Text(
-                                text = state.user?.data?.user?.wins.toString(),
+                                text = if(state.user?.data?.user?.wins != null) state.user.data.user.wins.toString() else "0",
                                 modifier = Modifier,
                                 style = Inter.copy(
                                     fontSize = 16.sp,
@@ -177,7 +176,7 @@ fun TopBar(state: HistoryState,navController: NavHostController) {
                             )
                             Spacer(modifier = Modifier.height(6.dp))
                             Text(
-                                text = state.user?.data?.user?.losses.toString(),
+                                text = if(state.user?.data?.user?.losses != null) state.user.data.user.losses.toString() else "0",
                                 modifier = Modifier,
                                 style = Inter.copy(
                                     fontSize = 16.sp,

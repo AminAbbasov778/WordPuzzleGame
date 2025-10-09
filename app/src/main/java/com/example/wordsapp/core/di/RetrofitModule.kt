@@ -1,7 +1,5 @@
 package com.example.wordsapp.core.di
 
-import com.example.wordsapp.history.data.remote.HistoryRequestService
-import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

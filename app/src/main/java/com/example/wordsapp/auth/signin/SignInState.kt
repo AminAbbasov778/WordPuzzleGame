@@ -1,6 +1,6 @@
 package com.example.wordsapp.auth.signin
 
-import com.google.firebase.auth.FirebaseUser
+import com.example.wordsapp.core.presentation.base.UIState
 
 data class SignInState(
     val email: String = "",
@@ -10,4 +10,4 @@ data class SignInState(
     val error: String? = null,
     val isPasswordVisible: Boolean = false,
     val errorMessage: String? = null
-)
+): UIState

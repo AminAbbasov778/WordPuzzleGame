@@ -1,18 +1,16 @@
 package com.example.wordsapp.auth.signup
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wordsapp.auth.domain.GetUserUidUseCase
-import com.example.wordsapp.auth.domain.SaveUsernameToRemoteUseCase
-import com.example.wordsapp.auth.domain.SaveUsernameUseCase
-import com.example.wordsapp.auth.domain.SignUpUseCase
-import com.example.wordsapp.auth.domain.ValidateEmailUseCase
-import com.example.wordsapp.auth.domain.ValidatePasswordUseCase
-import com.example.wordsapp.auth.domain.ValidateUsernameUseCase
+import com.example.wordsapp.auth.domain.usecases.GetUserUidUseCase
+import com.example.wordsapp.auth.domain.usecases.SaveUsernameToRemoteUseCase
+import com.example.wordsapp.auth.domain.usecases.SaveUsernameUseCase
+import com.example.wordsapp.auth.domain.usecases.SignUpUseCase
+import com.example.wordsapp.auth.domain.usecases.ValidateEmailUseCase
+import com.example.wordsapp.auth.domain.usecases.ValidatePasswordUseCase
+import com.example.wordsapp.auth.domain.usecases.ValidateUsernameUseCase
+import com.example.wordsapp.core.presentation.base.BaseViewModel
 import com.example.wordsapp.home.domain.usecases.SignInAnonymouslyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,81 +24,116 @@ class SignUpViewModel @Inject constructor(
     private val validateUsernameUseCase: ValidateUsernameUseCase,
     private val signInAnonymouslyUseCase: SignInAnonymouslyUseCase,
     private val getUserUidUseCase: GetUserUidUseCase,
-) : ViewModel() {
 
-    private val _state = MutableStateFlow(SignUpState())
-    val state: StateFlow<SignUpState> = _state
+    ) : BaseViewModel<SignUpState, SignUpIntent, SignUpNavigation>() {
 
-    fun onIntent(intent: SignUpIntent) {
-        when (intent) {
-            is SignUpIntent.EnterEmail -> _state.value = _state.value.copy(email = intent.email)
-            is SignUpIntent.EnterUsername -> _state.value =
-                _state.value.copy(username = intent.username)
+    override val initialState: SignUpState get()  = SignUpState()
+    override fun OnEvent(event: SignUpIntent) {
+        when (event) {
+            is SignUpIntent.EnterEmail -> updateState {
+                it.copy(email = event.email)
+            }
 
-            is SignUpIntent.EnterPassword -> _state.value =
-                _state.value.copy(password = intent.password)
+            is SignUpIntent.EnterUsername -> updateState {
+                it.copy(username = event.username)
+            }
+
+            is SignUpIntent.EnterPassword -> updateState {
+                it.copy(password = event.password)
+            }
 
             is SignUpIntent.SignUpClicked -> signUp()
-            is SignUpIntent.ChangePasswordVisibility -> _state.value =
-                _state.value.copy(isPasswordVisible = !_state.value.isPasswordVisible)
+            is SignUpIntent.ChangePasswordVisibility -> updateState {
+                it.copy(isPasswordVisible = !it.isPasswordVisible)
+            }
 
             SignUpIntent.ContinueAsGuestClicked -> continueAsGuest()
+            SignUpIntent.SignInClicked -> gotoSignIn()
         }
+
     }
 
+
+    fun gotoSignIn() {
+        navigate(SignUpNavigation.SignUpScreenToSignInScreen)
+
+    }
+
+
     private fun signUp() {
-        val email = _state.value.email
-        val password = _state.value.password
-        val username = _state.value.username
+        val email = state.value.email
+        val password = state.value.password
+        val username = state.value.username
 
         when {
             !validateEmailUseCase(email) -> {
-                _state.value = _state.value.copy(errorMessage = "Invalid email")
+                updateState {
+                    it.copy(errorMessage = "Invalid email")
+                }
                 return
             }
 
             !validatePasswordUseCase(password) -> {
-                _state.value =
-                    _state.value.copy(errorMessage = "Password must be at least 6 characters")
+                updateState {
+                    it.copy(errorMessage = "Password must be at least 6 characters")
+                }
                 return
             }
 
             !validateUsernameUseCase(username) -> {
-                _state.value =
-                    _state.value.copy(errorMessage = "Username must be at least 3 characters")
+                updateState {  it.copy(errorMessage = "Username must be at least 3 characters")}
+
                 return
             }
         }
 
         viewModelScope.launch {
-            _state.value = _state.value.copy(isLoading = true, errorMessage = null)
+           updateState {  it.copy(isLoading = true, errorMessage = null)}
             val result = signUpUseCase(email, password)
-            saveUsernameUseCase(_state.value.username)
-            saveUsernameToRemoteUseCase(_state.value.username)
+            saveUsernameUseCase(state.value.username)
+            saveUsernameToRemoteUseCase(state.value.username)
 
-            _state.value = if (result.isSuccess) {
-                _state.value.copy(isLoading = false, isSignedUp = true)
+           if (result.isSuccess) {
+               navigate(SignUpNavigation.SignUpScreenToSignInScreen)
+               updateState {
+                  it.copy(isLoading = false, isSignedUp = true)
+
+               }
+
             } else {
-                _state.value.copy(
+                updateState {
+                    it.copy(
                     isLoading = false,
                     errorMessage = result.exceptionOrNull()?.message
                 )
+                }
             }
         }
     }
 
     fun continueAsGuest() {
         viewModelScope.launch {
-            _state.value = _state.value.copy(isLoading = true, errorMessage = null)
+            updateState {
+                it.copy(isLoading = true, errorMessage = null)
+            }
             val result = signInAnonymouslyUseCase()
-            if(result.isSuccess){
+            if (result.isSuccess) {
                 val uid = getUserUidUseCase()
                 saveUsernameToRemoteUseCase("guest${uid}")
-                saveUsernameUseCase("guest${uid}")
-                _state.value = _state.value.copy(isLoading = false, isSignedUp = true)
+                saveUsernameUseCase("guest_${uid}")
+                navigate(SignUpNavigation.SignUpScreenToHomeScreen)
 
-            }else{
-                _state.value = _state.value.copy(isLoading = false, errorMessage = result.exceptionOrNull()?.message)
+                updateState {
+                   it.copy(isLoading = false, isSignedUp = true)
+               }
+
+            } else {
+               updateState {
+                   it.copy(
+                       isLoading = false,
+                       errorMessage = result.exceptionOrNull()?.message
+                   )
+               }
 
             }
         }

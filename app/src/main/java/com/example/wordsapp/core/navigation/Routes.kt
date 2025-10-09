@@ -1,9 +1,7 @@
 package com.example.wordsapp.core.navigation
 
-import com.example.wordsapp.history.presentation.HistoryRouteUi
-import com.example.wordsapp.home.presentation.GameRouteUi
-import com.example.wordsapp.home.presentation.RoomUi
-import kotlinx.serialization.Contextual
+import com.example.wordsapp.history.presentation.model.HistoryRouteUi
+import com.example.wordsapp.home.presentation.model.GameRouteUi
 import kotlinx.serialization.Serializable
 
 @Serializable

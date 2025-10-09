@@ -1,5 +1,7 @@
 package com.example.wordsapp.auth.signup
 
+import com.example.wordsapp.core.presentation.base.UIState
+
 data class SignUpState(
     val email: String = "",
     val username: String = "",
@@ -11,4 +13,4 @@ data class SignUpState(
 
 
 
-)
+): UIState

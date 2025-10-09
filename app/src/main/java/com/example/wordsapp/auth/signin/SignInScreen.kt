@@ -50,7 +50,6 @@ import com.example.wordsapp.ui.theme.Inter
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SignInScreen(
-    navController: NavHostController,
     onIntent: (SignInIntent) -> Unit,
     state: SignInState,
 ) {
@@ -181,7 +180,7 @@ fun SignInScreen(
                                     }
 
                                     Icon(
-                                        painter = painterResource(if (state.isPasswordVisible) R.drawable.ic_visible_small else R.drawable.ic_invisible),
+                                        painter = painterResource(if (state.isPasswordVisible) R.drawable.ic_visible else R.drawable.ic_invisible),
                                         contentDescription = "visibilty",
                                         tint = Color.Unspecified,
                                         modifier = Modifier
@@ -298,18 +297,12 @@ fun SignInScreen(
                             fontSize = 14.sp,
                             style = Inter,
                             color = Color(0xFFC50000), modifier = Modifier.clickable {
-                                navController.navigate(Routes.SignUpScreen)
+                               onIntent(SignInIntent.SignUpClicked)
                             }
                         )
                     }
 
-                    if (state.isSignedIn) {
-                        navController.navigate(Routes.HomeScreen) {
-                            popUpTo(Routes.HomeScreen) {
-                                inclusive = false
-                            }
-                        }
-                    }
+
 
 
                     Spacer(modifier = Modifier.height(22.dp))
@@ -338,6 +331,10 @@ fun SignInScreen(
                         )
 
                     }
+
+
+                    Spacer(modifier = Modifier.height(30.dp))
+
 
                 }
             }

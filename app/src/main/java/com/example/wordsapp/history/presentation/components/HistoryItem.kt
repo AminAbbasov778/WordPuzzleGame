@@ -31,16 +31,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.wordsapp.R
-import com.example.wordsapp.history.presentation.HistoryIntent
 import com.example.wordsapp.history.presentation.history.GameUi
-import com.example.wordsapp.home.presentation.components.EmptyHistory
+import com.example.wordsapp.history.presentation.intent.HistoryIntent
 import com.example.wordsapp.ui.theme.Inter
 
 @Composable
 fun HistoryItem(gameHistory: List<GameUi>, userId: String, onEvent: (HistoryIntent) -> Unit) {
 
 
-    if(gameHistory.isEmpty()) return EmptyHistory()
     LazyColumn(
         modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {

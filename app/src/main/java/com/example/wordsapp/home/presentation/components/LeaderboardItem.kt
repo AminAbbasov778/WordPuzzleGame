@@ -26,12 +26,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.wordsapp.R
-import com.example.wordsapp.history.presentation.HistoryState
+import com.example.wordsapp.history.presentation.model.HistoryRouteUi
+import com.example.wordsapp.history.presentation.state.HistoryState
 import com.example.wordsapp.ui.theme.Inter
 
 
 @Composable
-fun LeaderboardItem(state: HistoryState) {
+fun LeaderboardItem(state: HistoryState,historyRouteUi: HistoryRouteUi) {
     val sortedList = state.leaderboard.sortedByDescending { it.rank }.reversed()
     val myRank = sortedList.find { it.userId == state.user?.data?.user?.userId }
 
@@ -110,7 +111,7 @@ fun LeaderboardItem(state: HistoryState) {
 
                         Column {
                             Text(
-                                text = myRank?.username ?: "",
+                                text = myRank?.username ?: historyRouteUi.userName,
                                 style = Inter.copy(
                                     color = Color.White,
                                     fontSize = 14.sp,
@@ -121,7 +122,7 @@ fun LeaderboardItem(state: HistoryState) {
                                 modifier = Modifier.padding(end = 60.dp)
                             )
                             Text(
-                                text = myRank?.userId ?: "",
+                                text = myRank?.userId ?: historyRouteUi.userId,
                                 style = Inter.copy(
                                     color = Color(0xFF8591A3).copy(0.8f),
                                     fontSize = 12.sp,
@@ -160,7 +161,6 @@ fun LeaderboardItem(state: HistoryState) {
                 .height(8.dp)
         )
 
-        if(state.leaderboard.isEmpty()) return  EmptyLeaderBoard()
 
 
 

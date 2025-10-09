@@ -3,8 +3,6 @@ package com.example.wordsapp.core.navigation
 import android.net.Uri
 import android.os.Bundle
 import androidx.navigation.NavType
-import com.example.wordsapp.home.presentation.GameRouteUi
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 

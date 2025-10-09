@@ -1,6 +1,5 @@
 package com.example.wordsapp.core.base
 
-import android.util.Log
 import com.google.gson.Gson
 import io.socket.client.Socket
 import kotlinx.coroutines.CoroutineScope
@@ -35,15 +34,15 @@ abstract class BaseSocketHandler(
 
         socket.on(Socket.EVENT_CONNECT) {
             isConnected = true
-            onConnected()
             setupListeners()
 
 
         }
 
+
+
         socket.on(Socket.EVENT_DISCONNECT) {
             isConnected = false
-            onDisconnected()
         }
 
         socket.on(Socket.EVENT_CONNECT_ERROR) { args ->
@@ -60,8 +59,6 @@ abstract class BaseSocketHandler(
         isConnected = false
     }
 
-    protected open fun onConnected() {}
-    protected open fun onDisconnected() {}
 
     fun <T : Any> listen(event: String, baseClass: Class<T>): SharedFlow<T> {
         val flow = MutableSharedFlow<T>(replay = 0)

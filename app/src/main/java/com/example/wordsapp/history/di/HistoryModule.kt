@@ -1,6 +1,8 @@
 package com.example.wordsapp.history.di
 
 import com.example.wordsapp.history.data.remote.HistoryRequestService
+import com.example.wordsapp.history.data.repository.HistoryRepositoryImpl
+import com.example.wordsapp.history.domain.repository.HistoryRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,4 +19,11 @@ object HistoryModule {
         return retrofit.create(HistoryRequestService :: class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideHistoryRepository(historyRequestService: HistoryRequestService): HistoryRepository {
+        return HistoryRepositoryImpl(historyRequestService)
+
+
+}
 }

@@ -20,22 +20,25 @@ import com.example.wordsapp.ui.theme.Inter
 
 @Composable
 fun EmptyHistory() {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Icon(
-            painter = painterResource(R.drawable.ic_empty_history),
-            contentDescription = "log",
-            tint = Color.Unspecified,
-            modifier = Modifier.padding(top = 200.dp)
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            text = "There is nothing here!",
-            style = Inter.copy(color = Color(0xFFACAEB1).copy(0.8f), fontSize = 12.sp),
-            textAlign = TextAlign.Center
-        )
-    }
+
+
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_empty_history),
+                contentDescription = "log",
+                tint = Color.Unspecified,
+                modifier = Modifier.padding(top = 200.dp)
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                text = "There is nothing here!",
+                style = Inter.copy(color = Color(0xFFACAEB1).copy(0.8f), fontSize = 12.sp),
+                textAlign = TextAlign.Center
+            )
+        }
+
 
 }

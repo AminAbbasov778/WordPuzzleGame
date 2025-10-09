@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -20,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.LinearGradient
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -29,23 +27,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.wordsapp.R
 import com.example.wordsapp.core.navigation.Routes
-import com.example.wordsapp.history.presentation.HistoryRouteUi
-import com.example.wordsapp.home.presentation.HomeIntents
-import com.example.wordsapp.home.presentation.HomeState
-import com.example.wordsapp.ui.theme.Inknut40
+import com.example.wordsapp.history.presentation.model.HistoryRouteUi
+import com.example.wordsapp.home.presentation.intent.HomeIntents
+import com.example.wordsapp.home.presentation.state.HomeState
 import com.example.wordsapp.ui.theme.Inter
 
 @Composable
-fun HomeHeader(state: HomeState, username : String, onIntent: (HomeIntents) -> Unit, navController : NavHostController) {
-    LaunchedEffect(state.isSignOut){
-        if (state.isSignOut){
-            navController.navigate(Routes.SignInScreen){
-                popUpTo(Routes.SignInScreen){
-                    inclusive = false
-                }
-            }
-        }
-    }
+fun HomeHeader(state: HomeState, username : String, onIntent: (HomeIntents) -> Unit) {
+
+
 
     Row(
         modifier = Modifier
@@ -86,7 +76,7 @@ fun HomeHeader(state: HomeState, username : String, onIntent: (HomeIntents) -> U
                     tint = Color.Unspecified,
                     modifier = Modifier.padding(8.dp).clickable{
                         state.userUid?.let {
-                            navController.navigate(Routes.HistoryScreen(HistoryRouteUi(it)))
+                            onIntent(HomeIntents.GoToHistoryScreen)
                         }
                     }
                 )

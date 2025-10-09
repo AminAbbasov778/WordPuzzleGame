@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -30,18 +28,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.wordsapp.R
-import com.example.wordsapp.core.data.models.RoomState
-import com.example.wordsapp.home.presentation.HomeIntents
-import com.example.wordsapp.home.presentation.HomeState
-import com.example.wordsapp.home.presentation.RoomUi
-import com.example.wordsapp.home.presentation.Status
-import com.example.wordsapp.home.presentation.StatusUi
+import com.example.wordsapp.core.presentation.enums.Status
+import com.example.wordsapp.home.presentation.intent.HomeIntents
+import com.example.wordsapp.home.presentation.state.HomeState
 import com.example.wordsapp.ui.theme.Inter
 
 
 @Composable
 fun RoomsBody(
-    navController: NavHostController,
     modifier: Modifier = Modifier,
     isStatusGuideVisible: (Boolean) -> Unit,
     onIntent: (HomeIntents) -> Unit, username: String, userUid: String,state : HomeState
@@ -130,8 +124,8 @@ fun RoomsBody(
 
         if (state.filteredRooms.isNotEmpty()) {
             LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                items(state.filteredRooms) { room ->
-                    RoomItem(navController, room, onIntent, username, userUid)
+                items(state.filteredRooms, key = { it.roomId }) { room ->
+                    RoomItem( room, onIntent, username, userUid)
                     Spacer(modifier = Modifier.height(12.dp))
                 }
             }

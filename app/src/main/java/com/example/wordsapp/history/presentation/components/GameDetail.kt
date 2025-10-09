@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -36,8 +35,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.wordsapp.R
-import com.example.wordsapp.history.presentation.HistoryIntent
 import com.example.wordsapp.history.presentation.gamedetail.GameDetailUi
+import com.example.wordsapp.history.presentation.intent.HistoryIntent
 import com.example.wordsapp.ui.theme.Inter
 import kotlinx.coroutines.launch
 

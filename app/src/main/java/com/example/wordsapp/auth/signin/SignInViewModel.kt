@@ -1,17 +1,15 @@
 package com.example.wordsapp.auth.signin
 import android.annotation.SuppressLint
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wordsapp.auth.domain.GetUserUidUseCase
-import com.example.wordsapp.auth.domain.SaveUsernameToRemoteUseCase
-import com.example.wordsapp.auth.domain.SaveUsernameUseCase
-import com.example.wordsapp.auth.domain.SignInUseCase
-import com.example.wordsapp.auth.domain.ValidateEmailUseCase
-import com.example.wordsapp.auth.domain.ValidatePasswordUseCase
+import com.example.wordsapp.auth.domain.usecases.GetUserUidUseCase
+import com.example.wordsapp.auth.domain.usecases.SaveUsernameToRemoteUseCase
+import com.example.wordsapp.auth.domain.usecases.SaveUsernameUseCase
+import com.example.wordsapp.auth.domain.usecases.SignInUseCase
+import com.example.wordsapp.auth.domain.usecases.ValidateEmailUseCase
+import com.example.wordsapp.auth.domain.usecases.ValidatePasswordUseCase
+import com.example.wordsapp.core.presentation.base.BaseViewModel
 import com.example.wordsapp.home.domain.usecases.SignInAnonymouslyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,50 +21,55 @@ class SignInViewModel @Inject constructor(
     private val anonymouslyUseCase: SignInAnonymouslyUseCase,
     private val getUserUidUseCase: GetUserUidUseCase,
     private val saveUsernameUseCase : SaveUsernameUseCase,
-    private val saveUsernameToRemoteUseCase: SaveUsernameToRemoteUseCase
-): ViewModel() {
+    private val saveUsernameToRemoteUseCase: SaveUsernameToRemoteUseCase,
+): BaseViewModel<SignInState, SignInIntent, SignInNavigation>() {
+    override val initialState: SignInState get() = SignInState()
 
-    private val _state = MutableStateFlow(SignInState())
-    val state: StateFlow<SignInState> = _state
 
-    fun onEvent(intent: SignInIntent) {
-        when(intent) {
-            is SignInIntent.EnterEmail -> _state.value = _state.value.copy(email = intent.email)
-            is SignInIntent.EnterPassword -> _state.value = _state.value.copy(password = intent.password)
-            is SignInIntent.Submit -> signIn()
-            is SignInIntent.ChangePasswordVisibility -> _state.value = _state.value.copy(isPasswordVisible = !_state.value.isPasswordVisible)
-            SignInIntent.ContinueAsGuest -> continueAsGuest()
-        }
-    }
+
 
     @SuppressLint("SuspiciousIndentation")
     private fun signIn() {
-        val email = _state.value.email
-        val password = _state.value.password
+        val email = state.value.email
+        val password = state.value.password
 
 
         when {
             !validateEmailUseCase(email) -> {
-                _state.value = _state.value.copy(errorMessage = "Invalid email")
+                updateState { state ->
+                    state.copy(errorMessage = "Invalid email")
+                }
                 return
             }
             !validatePasswordUseCase(password) -> {
-                _state.value = _state.value.copy(errorMessage = "Password must be at least 6 characters")
+                updateState { state ->
+                    state.copy(errorMessage = "Password must be at least 6 characters")
+                }
                 return
             }
 
         }
 
-        _state.value = _state.value.copy(isLoading = true, error = null)
+        updateState { state ->
+            state.copy(isLoading = true, errorMessage = null)
+        }
 
         viewModelScope.launch {
             val result = signInUseCase(email, password)
                       anonymouslyUseCase()
 
             if(result.isSuccess) {
-                _state.value = _state.value.copy(isLoading = false, isSignedIn = true)
+                navigate(SignInNavigation.SignInScreenToHomeScreen)
+               updateState { state ->
+                    state.copy(isLoading = false, isSignedIn = true)
+                }
             } else {
-                _state.value = _state.value.copy(isLoading = false, error = result.exceptionOrNull()?.message)
+                updateState { state ->
+                    state.copy(
+                        isLoading = false,
+                        error = result.exceptionOrNull()?.message
+                    )
+                }
             }
         }
 
@@ -74,18 +77,53 @@ class SignInViewModel @Inject constructor(
 
     fun continueAsGuest() {
         viewModelScope.launch {
-            _state.value = _state.value.copy(isLoading = true, errorMessage = null)
+           updateState { state ->
+                state.copy(isLoading = true, errorMessage = null)
+            }
             val result = anonymouslyUseCase()
             if(result.isSuccess){
                 val uid = getUserUidUseCase()
                 saveUsernameToRemoteUseCase("guest${uid}")
                 saveUsernameUseCase("guest${uid}")
-                _state.value = _state.value.copy(isLoading = false, isSignedIn = true)
+              navigate(SignInNavigation.SignInScreenToHomeScreen)
+               updateState { state ->
+                    state.copy(isLoading = false, isSignedIn = true)
+                }
 
             }else{
-                _state.value = _state.value.copy(isLoading = false, error = result.exceptionOrNull()?.message)
+               updateState { state ->
+                    state.copy(
+                        isLoading = false,
+                        error = result.exceptionOrNull()?.message
+                    )
 
             }
         }
     }
+    }
+
+    fun gotoSignUp() {
+        navigate(SignInNavigation.SignInScreenToSignUpScreen)
+    }
+
+
+    override fun OnEvent(event: SignInIntent) {
+        when(event) {
+            is SignInIntent.EnterEmail -> updateState { state ->
+                state.copy(email = event.email)
+            }
+            is SignInIntent.EnterPassword -> updateState { state ->
+                state.copy(password = event.password)
+            }
+            is SignInIntent.Submit -> signIn()
+            is SignInIntent.ChangePasswordVisibility -> updateState { state ->
+                state.copy(isPasswordVisible = !state.isPasswordVisible)
+            }
+            SignInIntent.ContinueAsGuest -> continueAsGuest()
+            SignInIntent.SignUpClicked -> gotoSignUp()
+
+        }
+    }
+
+
 }

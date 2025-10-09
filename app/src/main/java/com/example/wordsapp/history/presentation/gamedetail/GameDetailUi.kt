@@ -1,8 +1,5 @@
 package com.example.wordsapp.history.presentation.gamedetail
 
-import com.example.wordsapp.history.presentation.history.PlayerUi
-import com.example.wordsapp.history.presentation.history.WinnerUi
-
 data class GameDetailUi(
     val createdAt: String,
     val difficulty: String,

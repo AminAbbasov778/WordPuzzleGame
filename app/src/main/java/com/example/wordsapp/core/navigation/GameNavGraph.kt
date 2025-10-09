@@ -1,17 +1,17 @@
 package com.example.wordsapp.core.navigation
 
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.example.wordsapp.game.GameScreen
-import com.example.wordsapp.game.GameViewModel
+import com.example.wordsapp.core.utils.Navigate
+import com.example.wordsapp.game.presentation.screen.GameScreen
+import com.example.wordsapp.game.presentation.viewmodel.GameViewModel
+import com.example.wordsapp.home.presentation.model.GameRouteUi
 import kotlin.reflect.typeOf
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.wordsapp.home.presentation.GameRouteUi
 
 
 fun NavGraphBuilder.gameNavGraph(navHostController: NavHostController) {
@@ -19,6 +19,7 @@ fun NavGraphBuilder.gameNavGraph(navHostController: NavHostController) {
        val viewModel : GameViewModel  =  hiltViewModel()
         val state by viewModel.state.collectAsStateWithLifecycle()
         val arguments = it.toRoute<Routes.GameScreen>()
-        GameScreen(navHostController,state,arguments.gameRouteUi,onEvent = {viewModel.onEvent(it)})
+        viewModel.Navigate(navHostController)
+        GameScreen(state,arguments.gameRouteUi,onEvent = {viewModel.OnEvent(it)})
     }
 }
