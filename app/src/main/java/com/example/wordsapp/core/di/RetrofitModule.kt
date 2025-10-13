@@ -14,7 +14,7 @@ object RetrofitModule {
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit{
-        return Retrofit.Builder().baseUrl("http://114.29.236.110:4000").addConverterFactory(
+        return Retrofit.Builder().baseUrl("http://172.20.10.179:4000").addConverterFactory(
             GsonConverterFactory.create()).build()
     }
 

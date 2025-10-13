@@ -18,7 +18,7 @@ object SocketModule {
     @Provides
     @Singleton
     fun provideSocket(): io.socket.client.Socket {
-        return IO.socket("http://114.29.236.110:3000",  IO.Options.builder().apply {
+        return IO.socket("http://172.20.10.179:3000",  IO.Options.builder().apply {
             setTransports(arrayOf("websocket"))
             setUpgrade(true)
             setRememberUpgrade(true)

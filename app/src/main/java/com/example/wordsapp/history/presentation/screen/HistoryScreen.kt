@@ -59,11 +59,18 @@ fun HistoryScreen(
         event(HistoryIntent.GetGames(historyRouteUi.userId))
     }
 
+    LaunchedEffect(pagerState.currentPage) {
+        val newTab = if (pagerState.currentPage == 0) HistoryTabs.HISTORY else HistoryTabs.LEADERBOARD
+        if (state.currentTab != newTab) {
+            event(HistoryIntent.ChangeTab(newTab))
+        }
+    }
     LaunchedEffect(state.currentTab) {
         val targetPage = if (state.currentTab == HistoryTabs.HISTORY) 0 else 1
-        pagerState.animateScrollToPage(targetPage)
+        if (pagerState.currentPage != targetPage) {
+            pagerState.animateScrollToPage(targetPage)
+        }
     }
-
 
     Scaffold {
         Box(
@@ -103,18 +110,13 @@ fun HistoryScreen(
                                     }
 
                                 }else{
-                                   if(state.leaderboard.isEmpty()) {
-                                       EmptyLeaderBoard()
-                                   }
 
-
-                                   else{
                                        HistoryItem(
                                            state.gameHistory,
                                            userId = state.user?.data?.user?.userId ?: "1",
                                            onEvent = { event(it) }
                                        )
-                                   }
+
 
                                 }
 
@@ -123,8 +125,13 @@ fun HistoryScreen(
                             }
 
                             1 -> {
+                                if(state.leaderboard.isEmpty()) {
+                                    EmptyLeaderBoard()
+                                }else{
+                                    LeaderboardItem(state,historyRouteUi)
 
-                                LeaderboardItem(state,historyRouteUi)
+                                }
+
 
 
                             }

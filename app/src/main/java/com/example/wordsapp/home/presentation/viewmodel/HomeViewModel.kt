@@ -67,7 +67,7 @@ class HomeViewModel @Inject constructor(
                     )
                 }
 
-                is HomeIntents.JoinRoom -> joinRoom(event.joinRoomUi)
+                is HomeIntents.JoinRoom -> joinRoom(event.joinRoomUi,event.gameRouteUi)
                 HomeIntents.SignOut -> {
                     signOutUseCase()
                     viewModelScope.launch {
@@ -99,7 +99,6 @@ class HomeViewModel @Inject constructor(
     val TAG = "jdn"
 
 
-   private var roomsJob: Job? = null
 
 
     init {
@@ -116,8 +115,8 @@ class HomeViewModel @Inject constructor(
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getRooms() {
-        roomsJob?.cancel()
-       roomsJob =  viewModelScope.launch(Dispatchers.IO) {
+
+       viewModelScope.launch(Dispatchers.IO) {
             getRoomsUseCase(if (state.value.selectedTab == Status.WAITING) 0 else if (state.value.selectedTab == Status.GAME) 1 else 2)
                 .onStart {updateState { state ->
                     state.copy(isLoading = true)
@@ -162,25 +161,14 @@ class HomeViewModel @Inject constructor(
 
 
 
-    fun joinRoom(joinRoomUi: JoinRoomUi) {
-        joinRoomsUseCase(joinRoomUi.toDomain())
+    fun joinRoom(joinRoomUi: JoinRoomUi,gameRouteUi: GameRouteUi) {
 
         viewModelScope.launch {
+            Log.e("history", "joinRoom: ${joinRoomUi.toString()}", )
+            joinRoomsUseCase(joinRoomUi.toDomain())
             updateState {
                 it.copy(allRooms = it.allRooms.map { room ->
                     if (room.roomId == joinRoomUi.roomId) {
-                        navigate(HomeNavigation.HomeScreenToGameScreen(GameRouteUi(
-                            roomId = room.roomId,
-                            roomName = room.roomName,
-                            status = if(room.status == Status.WAITING) "waiting" else if(room.status == Status.GAME) "game" else "full",
-                            maxPlayers = room.maxPlayers,
-                            username = state.value.username,
-                            userUid = state.value.userUid ?: ""
-                            ,
-                            currentPlayers = room.currentPlayers,
-                            difficulty = if(room.difficulty == Difficulty.EASY) "easy" else if(room.difficulty == Difficulty.MEDIUM) "medium" else "hard",
-                            language = if(room.language == Language.EN) "en" else if(room.language == Language.AZ) "az" else "tr",
-                        )))
                         room.copy(
                             isJoinClicked = true,
                             currentPlayers = room.currentPlayers + 1
@@ -192,6 +180,9 @@ class HomeViewModel @Inject constructor(
                 )
 
             }
+
+            navigate(HomeNavigation.HomeScreenToGameScreen(gameRouteUi))
+
 
         }
     }

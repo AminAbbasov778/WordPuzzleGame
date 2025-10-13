@@ -1,6 +1,6 @@
 package com.example.wordsapp.core.network
 
-import com.example.wordsapp.core.base.BaseSocketHandler
+import com.example.wordsapp.core.network.base.BaseSocketHandler
 import com.example.wordsapp.game.data.model.HomeState
 import com.example.wordsapp.home.data.model.RoomUpdate
 import com.example.wordsapp.game.data.model.GameOver

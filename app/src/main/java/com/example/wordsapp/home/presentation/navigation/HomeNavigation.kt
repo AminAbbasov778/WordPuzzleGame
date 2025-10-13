@@ -14,12 +14,6 @@ sealed class HomeNavigation(
 ) : Navigation(route, shouldPop,
     popInclusive,popUpToRoute,popUpToInclusive) {
 
-    data class ToPage(
-        val destination: Routes
-    ) : HomeNavigation(
-        route = destination,
-        shouldPop = false,
-    )
     data class HomeScreenToHistoryScreen(val historyRouteUi: HistoryRouteUi) :
         HomeNavigation(Routes.HistoryScreen(historyRouteUi), shouldPop = false, popInclusive = true,popUpToRoute = Routes.HomeScreen,popUpToInclusive = true)
     data class HomeScreenToGameScreen(val gameRouteUi: GameRouteUi,) :

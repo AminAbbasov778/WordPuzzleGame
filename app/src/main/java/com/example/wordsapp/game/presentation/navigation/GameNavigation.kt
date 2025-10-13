@@ -13,13 +13,6 @@ sealed class GameNavigation(
 ) : Navigation(route, shouldPop,
     popInclusive, popUpTo, popUpToInclusive) {
 
-    data class ToPage(
-        val destination: Routes
-    ) : GameNavigation(
-        route = destination,
-        shouldPop = false,
-
-    )
     data class GameScreenToHistoryScreen(val historyRouteUi: HistoryRouteUi) :
         GameNavigation(Routes.HistoryScreen(historyRouteUi), shouldPop = false,  popInclusive = true, popUpTo = Routes.GameRoot, popUpToInclusive = true )
 

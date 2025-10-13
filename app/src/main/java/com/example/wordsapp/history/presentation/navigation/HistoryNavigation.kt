@@ -16,14 +16,6 @@ sealed class HistoryNavigation(
     popUpToInclusive
      ) {
 
-    data class ToPage(
-        val destination: Routes
-    ) : HistoryNavigation(
-        route = destination,
-        shouldPop = false,
-
-    )
     data object HistoryScreenToHomeScreen : HistoryNavigation(route = Routes.HomeScreen, shouldPop = false, popInclusive = true, popUpTo = Routes.HistoryRoot, popUpToInclusive = false)
-
 
 }

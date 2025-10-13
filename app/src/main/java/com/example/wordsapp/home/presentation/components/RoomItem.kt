@@ -32,6 +32,7 @@ import com.example.wordsapp.home.presentation.intent.HomeIntents
 import com.example.wordsapp.home.presentation.model.GameRouteUi
 import com.example.wordsapp.home.presentation.model.JoinRoomUi
 import com.example.wordsapp.home.presentation.model.RoomUi
+import com.example.wordsapp.home.presentation.navigation.HomeNavigation
 import com.example.wordsapp.ui.theme.Inknut40
 import com.example.wordsapp.ui.theme.Inter
 
@@ -114,6 +115,17 @@ fun RoomItem( room: RoomUi, onIntent: (HomeIntents) -> Unit,username: String,use
                                     username = username,
                                     difficulty = if (room.difficulty == Difficulty.EASY) "easy" else if (room.difficulty == Difficulty.MEDIUM) "medium" else "hard",
                                     language = if (room.language == Language.EN) "en" else if (room.language == Language.AZ) "az" else "tr"
+                                ),  GameRouteUi(
+                                    roomId = room.roomId,
+                                    roomName = room.roomName,
+                                    status = if(room.status == Status.WAITING) "waiting" else if(room.status == Status.GAME) "game" else "full",
+                                    maxPlayers = room.maxPlayers,
+                                    username = username,
+                                    userUid = userUid
+                                    ,
+                                    currentPlayers = room.currentPlayers,
+                                    difficulty = if(room.difficulty == Difficulty.EASY) "easy" else if(room.difficulty == Difficulty.MEDIUM) "medium" else "hard",
+                                    language = if(room.language == Language.EN) "en" else if(room.language == Language.AZ) "az" else "tr",
                                 )
                             )
                         )

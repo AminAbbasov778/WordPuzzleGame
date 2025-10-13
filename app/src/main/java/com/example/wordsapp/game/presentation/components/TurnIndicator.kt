@@ -22,7 +22,7 @@ fun TurnIndicator(
     turnPlayerName: String?
 ) {
     Box(
-        modifier = Modifier
+        modifier = Modifier.padding(horizontal = 80.dp)
             .fillMaxWidth()
             .wrapContentWidth(Alignment.CenterHorizontally)
             .background(

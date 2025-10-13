@@ -34,6 +34,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wordsapp.R
 import com.example.wordsapp.home.presentation.components.CreateRoom
 import com.example.wordsapp.home.presentation.components.HomeHeader
+import com.example.wordsapp.home.presentation.components.RoomTabs
 import com.example.wordsapp.home.presentation.components.RoomsBody
 import com.example.wordsapp.home.presentation.components.StatusGuideFooter
 import com.example.wordsapp.home.presentation.intent.HomeIntents
@@ -78,6 +79,7 @@ fun HomeScreen( onIntent: (HomeIntents) -> Unit, state: HomeState) {
                     Column(modifier = Modifier.fillMaxSize().background(Color(0xFF222831)).padding(horizontal = 20.dp)){
                        Spacer(modifier = Modifier.height(16.dp))
                         CreateRoom()
+                        RoomTabs(onIntent = onIntent,state = state, isStatusGuideVisible = { onIntent(HomeIntents.ChangeStatusGuideVisibility)})
 
                         if (state.isLoading) {
 
@@ -103,7 +105,6 @@ fun HomeScreen( onIntent: (HomeIntents) -> Unit, state: HomeState) {
 
                             RoomsBody(
                                 modifier = Modifier.weight(1f),
-                                isStatusGuideVisible = { onIntent(HomeIntents.ChangeStatusGuideVisibility) },
                                 onIntent = { onIntent(it)
                                 },username = state.username,userUid = state.userUid ?: ""
                             , state = state)

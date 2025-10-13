@@ -1,5 +1,6 @@
 package com.example.wordsapp.game.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wordsapp.core.presentation.base.BaseViewModel
@@ -28,6 +29,7 @@ import com.example.wordsapp.game.presentation.state.GameState
 import com.example.wordsapp.home.presentation.mapper.toUi
 import com.example.wordsapp.game.presentation.model.PlayerJoinedUi
 import com.example.wordsapp.game.presentation.navigation.GameNavigation
+import com.example.wordsapp.history.presentation.model.HistoryRouteUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -133,9 +135,18 @@ class GameViewModel @Inject constructor(
             GameIntent.CustomWordVisibility ->  updateState { it.copy(isCustomWordVisible = !it.isCustomWordVisible) }
             GameIntent.GoBack ->  updateState { it.copy(isBack = !it.isBack) }
             GameIntent.ChangeWordVisibility -> changeWordVisibility()
-            is GameIntent.GoToHistoryScreen -> TODO()
-            GameIntent.GoToHomeScreen -> TODO()
+            is GameIntent.GoToHistoryScreen -> goToHistoryScreen(event.historyRouteUi)
+            GameIntent.GoToHomeScreen -> goToHomeScreen()
         }
+    }
+
+    fun goToHistoryScreen(historyRouteUi: HistoryRouteUi){
+        navigate(GameNavigation.GameScreenToHistoryScreen(historyRouteUi))
+
+    }
+
+    fun goToHomeScreen(){
+        navigate(GameNavigation.GameScreenToHomeScreen)
     }
 
 
@@ -176,6 +187,8 @@ class GameViewModel @Inject constructor(
         if(state.value.isObservingFlows) return
         updateState { it.copy(isObservingFlows = true) }
         playerJoinedFlowUseCase().onEach {
+            Log.e("history", "observeFlows: ${it.toUi()}", )
+
             if(it.userId != state.value.gameRouteUi.userUid){
                 updateState { s ->
                     s.copy(
@@ -187,6 +200,13 @@ class GameViewModel @Inject constructor(
             }
 
         }.launchIn(viewModelScope)
+
+
+
+
+
+
+
 
         playerReadyUpdatedFlowUseCase().onEach { update ->
             updateState { s ->

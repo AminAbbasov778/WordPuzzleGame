@@ -11,17 +11,12 @@ sealed class SignUpNavigation(
     popUpToInclusive: Boolean = true
 ) : Navigation(route, shouldPop, popInclusive,popUpToRoute,popUpToInclusive) {
 
-    data class ToPage(
-        val destination: Routes
-    ) : SignUpNavigation(
-        route = destination,
-        shouldPop = false,
-
-    )
 
     data object SignUpScreenToSignInScreen :
         SignUpNavigation(Routes.SignInScreen, shouldPop = false, popInclusive = true,popUpToRoute = Routes.SignUpScreen,popUpToInclusive = true)
     data object SignUpScreenToHomeScreen :
         SignUpNavigation(Routes.HomeScreen, shouldPop = false, popInclusive = true,popUpToRoute = Routes.SignUpScreen,popUpToInclusive = true)
+
+
 }
 

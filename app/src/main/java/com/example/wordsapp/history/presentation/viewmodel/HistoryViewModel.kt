@@ -106,9 +106,12 @@ class HistoryViewModel @Inject constructor(
                 .onStart { updateState { it.copy(isLoading = true, error = "") }}
                 .catch { e -> updateState { it.copy(isLoading = false, error = e.message ?: "Unknown error") }}
                 .collect { result ->
+                    Log.e("historyview", "getGames: ${result.getOrNull()}", )
                     result.fold(
                         onSuccess = { games ->
                             updateState { it.copy(isLoading = false, gameHistory = games.data.games.filter { it.players.any { player -> player.id == userId } }.map { it.toUi() })}
+                            Log.e("historyview", "isWorked: ${state.value.gameHistory.toString()} userid $userId", )
+
                         },
                         onFailure = { e ->
                             updateState{ it.copy(isLoading = false, error = e.message ?: "Unknown error")}

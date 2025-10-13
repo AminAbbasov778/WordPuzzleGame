@@ -12,12 +12,7 @@ sealed class SplashNavigation(
 ) : Navigation(route, shouldPop, popInclusive,popUpToRoute,popUpToInclusive
 ) {
 
-    data class ToPage(
-        val destination: Routes
-    ) : SplashNavigation(
-        route = destination,
-        shouldPop = false,
-    )
+
     data object SplashScreenToSignInScreen :
         SplashNavigation(Routes.SignInScreen, shouldPop = false,popInclusive = true,popUpToRoute = Routes.SplashScreen,popUpToInclusive = true)
 

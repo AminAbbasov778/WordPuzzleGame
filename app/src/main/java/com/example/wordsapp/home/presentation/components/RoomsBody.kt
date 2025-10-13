@@ -37,88 +37,11 @@ import com.example.wordsapp.ui.theme.Inter
 @Composable
 fun RoomsBody(
     modifier: Modifier = Modifier,
-    isStatusGuideVisible: (Boolean) -> Unit,
+
     onIntent: (HomeIntents) -> Unit, username: String, userUid: String,state : HomeState
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        Spacer(modifier = Modifier.height(21.dp))
 
-
-        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_door),
-                    contentDescription = "door",
-                    tint = Color.Unspecified,
-                )
-                Spacer(modifier = Modifier.width(2.dp))
-                Text(
-                    text = state.filteredRooms.size.toString(),
-                    style = Inter.copy(color = Color(0xFFCFCFCF), fontSize = 12.sp),
-                    modifier = Modifier
-                )
-            }
-
-            Spacer(modifier = Modifier.width(20.dp))
-
-
-            Row(
-                modifier = Modifier
-                    .background(
-                        color = Color(0xFF7D8899).copy(0.1f),
-                        shape = RoundedCornerShape(50.dp)
-                    )
-                    .border(
-                        width =1.dp,
-                        color = Color(0xFF7D8899).copy(0.1f),
-                        shape = RoundedCornerShape(50.dp)
-                    )
-                    .weight(1f),horizontalArrangement = Arrangement.spacedBy(5.dp)
-            ) {
-                state.status.forEachIndexed { index,item->
-                    Box(
-                        modifier = Modifier
-                            .padding(start = 2.dp, bottom = 2.dp, top = 2.dp)
-                            .background(
-                                color = if (item.isSelected) Color.White else Color.Transparent,
-                                shape = RoundedCornerShape(50.dp)
-                            ).weight(1f).clickable {
-                                onIntent(HomeIntents.ChangeCurrentTab(if(item.status == Status.WAITING) Status.WAITING  else if(item.status == Status.GAME) Status.GAME else Status.FULL))
-                            }, contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = item.statusName ,
-                            style = Inter.copy(
-                                color = if (item.isSelected) Color.Black else Color.White,
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.SemiBold
-                            ),
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
-                        )
-                    }
-
-
-                }
-            }
-
-            Spacer(modifier = Modifier.width(20.dp))
-
-
-
-
-
-            Icon(
-                painter = painterResource(R.drawable.ic_info),
-                contentDescription = "info",
-                tint = Color.Unspecified,
-                modifier = Modifier
-                    .clickable {
-                        isStatusGuideVisible(true)
-
-                    }
-            )
-        }
 
         Spacer(modifier = Modifier.height(19.dp))
 

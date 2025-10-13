@@ -1,5 +1,6 @@
-package com.example.wordsapp.core.base
+package com.example.wordsapp.core.network.base
 
+import android.util.Log
 import com.google.gson.Gson
 import io.socket.client.Socket
 import kotlinx.coroutines.CoroutineScope
@@ -61,6 +62,7 @@ abstract class BaseSocketHandler(
 
 
     fun <T : Any> listen(event: String, baseClass: Class<T>): SharedFlow<T> {
+        Log.e("history", "listen: $event", )
         val flow = MutableSharedFlow<T>(replay = 0)
         eventFlows[event] = flow as MutableSharedFlow<Any>
         eventClasses[event] = baseClass
@@ -72,6 +74,7 @@ abstract class BaseSocketHandler(
         val jsonStr = args.getOrNull(0)?.toString() ?: return
         try {
             val parsed = gson.fromJson(jsonStr, baseClass)
+            Log.e("history", "${event},datas: ${parsed.toString()}", )
             scope.launch { (flow as MutableSharedFlow<T>).emit(parsed) }
         } catch (e: Exception) {
         }
