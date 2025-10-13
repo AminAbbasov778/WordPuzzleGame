@@ -124,6 +124,71 @@ It uses **MVI (Model-View-Intent)** and **Clean Architecture**, along with **Roo
 
 ---
 
+├── build.gradle.kts
+├── settings.gradle.kts
+├── core
+│ ├── build.gradle.kts
+│ └── src
+│ └── main
+│ └── java/com/example/core
+│ ├── data
+│ │ ├── local
+│ │ │ └── PrefsManager.kt
+│ │ └── remote
+│ │ └── NetworkModule.kt
+│ ├── domain
+│ │ └── model
+│ │ └── Result.kt
+│ └── util
+│ └── Mapper.kt
+├── features
+│ ├── home
+│ │ ├── build.gradle.kts
+│ │ └── src
+│ │ └── main
+│ │ └── java/com/example/feature/home
+│ │ ├── data
+│ │ │ ├── repository
+│ │ │ │ └── HomeRepositoryImpl.kt
+│ │ │ └── source
+│ │ │ └── HomeApi.kt
+│ │ ├── domain
+│ │ │ ├── model
+│ │ │ │ └── HomeItem.kt
+│ │ │ └── usecase
+│ │ │ └── GetHomeItemsUseCase.kt
+│ │ └── presentation
+│ │ ├── HomeViewModel.kt
+│ │ └── HomeScreen.kt
+│ ├── signup
+│ │ ├── build.gradle.kts
+│ │ └── src
+│ │ └── main
+│ │ └── java/com/example/feature/signup
+│ │ ├── data
+│ │ │ └── auth
+│ │ │ └── AuthRemoteDataSource.kt
+│ │ ├── domain
+│ │ │ └── usecase
+│ │ │ └── SignUpUseCase.kt
+│ │ └── presentation
+│ │ ├── SignUpViewModel.kt
+│ │ └── SignUpScreen.kt
+│ └── common-ui
+│ ├── build.gradle.kts
+│ └── src
+│ └── main
+│ └── java/com/example/feature/commonui
+│ └── components
+│ └── ButtonPrimary.kt
+└── app
+├── build.gradle.kts
+└── src
+└── main
+└── java/com/example/app
+├── MainActivity.kt
+└── NavGraph.kt
+
 ## 🚀 Getting Started
 
 ```bash
