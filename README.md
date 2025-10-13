@@ -12,9 +12,9 @@ It uses **MVI (Model-View-Intent)** and **Clean Architecture**, along with **Roo
 |--------------|-----------|-------------|-------------|
 | <img src="screenshots/Screen_recording_20251013_154009 (online-video-cutter.com) (1).gif" width="200"> | <img src="screenshots/wordssigninscreen.png" width="200"> | <img src="screenshots/wordssignupscreen.png" width="200"> |<img src="screenshots/gamehome.png" width="200"> |
 
-| Home İnfo || Game Screen | Game History | Game Detail | Game Leaderboard |
+| Home İnfo || Game Screen | Game History | Game Detail |
 |--------------|-----------|-------------|-------------|
-| <img src="screenshots/gamehomeinfo.png" width="200"> |  <img src="screenshots/gamescreen.png" width="200"> | <img src="screenshots/gamehistory.png" width="200"> | <img src="screenshots/gamedetail.png" width="200"> |<img src="screenshots/gameleaderboard.png" width="200"> |
+| <img src="screenshots/gamehomeinfo.png" width="200"> |  <img src="screenshots/gamescreen.png" width="200"> | <img src="screenshots/gamehistory.png" width="200"> | <img src="screenshots/gamedetail.png" width="200"> |
 
 | Game Leaderboard |
 |-------------|
