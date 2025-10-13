@@ -8,9 +8,9 @@ It uses **MVI (Model-View-Intent)** and **Clean Architecture**, along with **Roo
 
 ## 📸 Screenshots & Demo
 
-| Authentication | Home / Game Rooms | Game Screen | History & Profile |
+| Sign In | Sign Up | Game Screen | History & Profile |
 |----------------|-----------------|-------------|-----------------|
-| <img src="https://via.placeholder.com/200x400.png?text=Login+Screen" width="200"> | <img src="https://via.placeholder.com/200x400.png?text=Home+Screen" width="200"> | <img src="https://via.placeholder.com/200x400.png?text=Game+Screen" width="200"> | <img src="https://via.placeholder.com/200x400.png?text=History" width="200"> |
+| <img src="screenshots/wordssigninscreen.png" width="200"> | <img src="screenshots/wordssignupscreen.png" width="200"> |
 
 ---
 
