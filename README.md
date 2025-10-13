@@ -8,8 +8,8 @@ It uses **MVI (Model-View-Intent)** and **Clean Architecture**, along with **Roo
 
 ## 📸 Screenshots & Demo
 
-| Sign In | Sign Up | Game Screen | History & Profile |
-|----------------|-----------------|-------------|-----------------|
+| Sign In | Sign Up |
+|----------------|-----------------|
 | <img src="screenshots/wordssigninscreen.png" width="200"> | <img src="screenshots/wordssignupscreen.png" width="200"> |
 
 ---
