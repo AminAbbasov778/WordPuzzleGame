@@ -8,9 +8,9 @@ It uses **MVI (Model-View-Intent)** and **Clean Architecture**, along with **Roo
 
 ## 📸 Screenshots & Demo
 
-| Sign In | Sign Up | Home |
-|----------------|-----------------|-----------------|
-| <img src="screenshots/wordssigninscreen.png" width="200"> | <img src="screenshots/wordssignupscreen.png" width="200"> |<img src="screenshots/wordshomescreen.png" width="200"> |
+| Demo.GİF | Sign In | Sign Up | Home |
+|----------------||----------------|-----------------|-----------------|
+| <img src="screenshots/Screen_recording_20251013_154009 (online-video-cutter.com) (1).gif" width="200"> | <img src="screenshots/wordssigninscreen.png" width="200"> | <img src="screenshots/wordssignupscreen.png" width="200"> |<img src="screenshots/wordshomescreen.png" width="200"> |
 
 ---
 
