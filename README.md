@@ -14,7 +14,7 @@ It uses **MVI (Model-View-Intent)** and **Clean Architecture**, along with **Roo
 
 | Home İnfo | Game Screen | Game Guess | Game History |
 |--------------|-----------|-------------|-------------|
-| <img src="screenshots/gamehomeinfo.png" width="200"> |  <img src="screenshots/gamescreen.png" width="200"> | <img src="screenshots/gamehistory.png" width="200">  |
+| <img src="screenshots/gamehomeinfo.png" width="200"> |  <img src="screenshots/gamescreen.png" width="200"> | <img src="screenshots/gameguessword.png" width="200">  | <img src="screenshots/gamehistory.png" width="200">  |
 
 | Game Detail | Game Leaderboard |
 |-------------|-------------|
