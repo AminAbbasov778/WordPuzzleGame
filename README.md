@@ -119,7 +119,7 @@ It uses **MVI (Model-View-Intent)** and **Clean Architecture**, along with **Roo
 ## 🚀 Getting Started
 
 ```bash
-git clone https://github.com/your-username/WordsApp.git
+git clone https://github.com/AminAbbasov778/WordPuzzleGame.git
 Open the project in Android Studio
 
 Configure Google Sign-In:
