@@ -10,15 +10,15 @@ It uses **MVI (Model-View-Intent)** and **Clean Architecture**, along with **Roo
 
 | Demo/GİF | Sign In | Sign Up | Home |
 |--------------|-----------|-------------|-------------|
-| <img src="screenshots/Screen_recording_20251013_154009 (online-video-cutter.com) (1).gif" width="200"> | <img src="screenshots/wordssigninscreen.png" width="200"> | <img src="screenshots/wordssignupscreen.png" width="200"> |<img src="screenshots/gamehome.png" width="200"> |
+| <img src="screenshots/Screen_recording_20251013_160347 (online-video-cutter.com).gif" width="200"> | <img src="screenshots/wordssigninscreen.png" width="200"> | <img src="screenshots/wordssignupscreen.png" width="200"> |<img src="screenshots/gamehome.png" width="200"> |
 
-| Home İnfo | Game Screen | Game Guess | Game History |
-|--------------|-----------|-------------|-------------|
-| <img src="screenshots/gamehomeinfo.png" width="200"> |  <img src="screenshots/gamescreen.png" width="200"> | <img src="screenshots/gameguessword.png" width="200">  | <img src="screenshots/gamehistory.png" width="200">  |
+| Home İnfo | Game Guess | Game History | Game Detail |
+|--------------|-------------|-------------|-------------|
+| <img src="screenshots/gamehomeinfo.png" width="200"> |  <img src="screenshots/gameguessword.png" width="200">  | <img src="screenshots/gamehistory.png" width="200">  |<img src="screenshots/gamedetail.png" width="200">|
 
-| Game Detail | Game Leaderboard |
-|-------------|-------------|
-| <img src="screenshots/gamedetail.png" width="200">|<img src="screenshots/gameleaderboard.png" width="200"> |
+| Game Leaderboard |
+|-------------|
+|<img src="screenshots/gameleaderboard.png" width="200"> |
 
 ---
 
