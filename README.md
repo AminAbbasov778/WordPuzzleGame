@@ -6,6 +6,7 @@ It uses **MVI (Model-View-Intent)** and **Clean Architecture**, along with **Roo
 
 ---
 
+
 ## 📸 Screenshots & Demo
 
 | Demo/GİF | Sign In | Sign Up | Home |
